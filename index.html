@@ -3,94 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroFuturo - Sustentabilidade e Tecnologia</title>
+    <title>AgroFuturo — Sustentabilidade & Tecnologia Agrícola</title>
+    <!-- Fonte moderna e profissional -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <div class="logo">AgroFuturo</div>
+    <header id="main-header">
+        <div class="logo">
+            <span class="logo-icon">🌱</span> AgroFuturo
+        </div>
+        
+        <button class="btn-menu" aria-label="Abrir menu" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
 
-        <button class="btn-menu" aria-label="Abrir menu">☰</button>
-
-        <nav>
-            <a href="#home">Home</a>
+        <nav id="nav-menu">
+            <a href="#home">Início</a>
             <a href="#producao">Produção</a>
             <a href="#tecnologia">Tecnologia</a>
             <a href="#desafios">Desafios</a>
         </nav>
 
-        <a href="#" class="btn-calculator">Calculadora de Impacto</a>
+        <button class="btn-calculator">Calculadora de Impacto</button>
     </header>
 
     <main>
+        <!-- Hero Section -->
         <section id="home" class="hero">
-            <h1>Agro forte, futuro sustentável</h1>
-            <p>Equilíbrio entre produção e meio ambiente</p>
+            <div class="hero-content">
+                <span class="badge">O Futuro da Agricultura</span>
+                <h1>Agro forte, futuro sustentável</h1>
+                <p>Unindo alta produtividade e preservação ambiental através de tecnologia de ponta.</p>
+                <div class="hero-actions">
+                    <a href="#tecnologia" class="btn-primary">Conhecer Tecnologias</a>
+                    <button class="btn-secondary btn-calculator">Calcular Impacto</button>
+                </div>
+            </div>
         </section>
 
+        <!-- Seção Produção -->
         <section id="producao" class="grid-container alternado">
-            <div>
-                <h2>Produção Agrícola</h2>
-                <p>Eficiência produtiva é o alicerce para manter a economia forte sem necessidade de expansão predatória.</p>
+            <div class="section-text">
+                <span class="section-tag">Eficiência</span>
+                <h2>Produção Agrícola Inteligente</h2>
+                <p>Aumentar a produtividade sem expandir a área cultivada é o maior desafio do século. Através de práticas regenerativas, conseguimos manter o solo fértil e a economia forte de forma sustentável.</p>
+                <ul class="features-list">
+                    <li>Rotação de culturas otimizada</li>
+                    <li>Recuperação de áreas degradadas</li>
+                    <li>Preservação de recursos hídricos</li>
+                </ul>
             </div>
-            <div class="placeholder">[Placeholder Infográfico]</div>
-        </section>
-
-        <section id="tecnologia" class="section-default">
-            <h2>Tecnologias Sustentáveis</h2>
-            <div class="tech-grid">
-                <div class="card"><h3>Precisão</h3><p>Otimização via sensores.</p></div>
-                <div class="card"><h3>Irrigação</h3><p>Controle automatizado.</p></div>
-                <div class="card"><h3>Drones</h3><p>Monitoramento remoto.</p></div>
-                <div class="card"><h3>Energia</h3><p>Painéis solares.</p></div>
+            <div class="visual-card">
+                <div class="chart-placeholder">
+                    <div class="bar-chart">
+                        <div class="bar" style="--height: 40%"><span>2024</span></div>
+                        <div class="bar highlight" style="--height: 85%"><span>Futuro</span></div>
+                    </div>
+                    <p class="chart-label">Projeção de eficiência de produção (+112%)</p>
+                </div>
             </div>
         </section>
 
-        <section id="desafios" class="section-default">
-            <h2>Desafios</h2>
-            <p>Adotar práticas sustentáveis, reduzir desperdício e integrar tecnologia com responsabilidade social.</p>
-        </section>
-    </main>
-
-    <footer id="contato">
-        <div>
-            <h4>AgroFuturo</h4>
-            <p>Conectando tecnologia e campo.</p>
-        </div>
-        <div>
-            <h4>Contato</h4>
-            <p>contato@agrofuturo.com</p>
-        </div>
-        <div>
-            <h4>Endereço</h4>
-            <p>Rua Exemplo, 123 — Cidade</p>
-        </div>
-    </footer>
-
-    <div id="modal-calculator" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Fechar modal">✕</button>
-            <h3>Calculadora de Impacto (exemplo)</h3>
-
-            <form id="calc-form">
-                <label>
-                    Área (ha)
-                    <input type="number" id="area" min="0" step="0.01" required>
-                </label>
-
-                <label>
-                    Emissão por ha (ton CO₂/ha)
-                    <input type="number" id="emissao" min="0" step="0.01" value="1.2" required>
-                </label>
-
-                <button type="submit" class="btn-submit">Calcular</button>
-            </form>
-
-            <div id="calc-result" class="calc-result" aria-live="polite"></div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+        <!-- Seção Tecnologia -->
+        <section id="tecnologia" class="section-default bg-light">
+            <div class="section-header">
+                <span class="section-tag">Inovação</span>
+                <h2>Tecnologias Sustentáveis</h2>
