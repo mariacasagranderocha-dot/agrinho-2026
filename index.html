@@ -1,289 +1,96 @@
-```html
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agro Forte, Futuro Sustentável</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: Arial, sans-serif;
-}
-
-body{
-    background:#f4f4f4;
-    color:#333;
-    line-height:1.6;
-}
-
-/* Cabeçalho */
-header{
-    background:#2e7d32;
-    color:white;
-    padding:20px;
-    text-align:center;
-}
-
-header h1{
-    margin-bottom:10px;
-}
-
-/* Menu */
-nav{
-    background:#1b5e20;
-    padding:15px;
-    text-align:center;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:bold;
-}
-
-nav a:hover{
-    color:#c8e6c9;
-}
-
-/* Banner */
-.banner{
-    background:url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854') center/cover;
-    height:400px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-}
-
-.banner-text{
-    background:rgba(0,0,0,0.6);
-    color:white;
-    padding:30px;
-    border-radius:10px;
-}
-
-.banner h2{
-    font-size:2.5rem;
-}
-
-/* Seções */
-section{
-    padding:60px 10%;
-    background:white;
-    margin:20px 0;
-}
-
-section h2{
-    color:#2e7d32;
-    margin-bottom:20px;
-}
-
-.cards{
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.card{
-    flex:1;
-    min-width:250px;
-    background:#f9f9f9;
-    padding:20px;
-    border-left:5px solid #4caf50;
-    border-radius:8px;
-}
-
-/* Formulário */
-form{
-    display:flex;
-    flex-direction:column;
-}
-
-input, textarea{
-    padding:12px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:5px;
-}
-
-button{
-    background:#2e7d32;
-    color:white;
-    border:none;
-    padding:12px;
-    cursor:pointer;
-    border-radius:5px;
-}
-
-button:hover{
-    background:#1b5e20;
-}
-
-/* Rodapé */
-footer{
-    background:#1b5e20;
-    color:white;
-    text-align:center;
-    padding:20px;
-}
-
-@media(max-width:768px){
-    .cards{
-        flex-direction:column;
-    }
-
-    .banner h2{
-        font-size:1.8rem;
-    }
-
-    nav a{
-        display:block;
-        margin:10px 0;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroFuturo - Sustentabilidade e Tecnologia</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-    <h1>🌱 Agro Forte, Futuro Sustentável</h1>
-    <p>Equilíbrio entre Produção e Meio Ambiente</p>
-</header>
+    <header>
+        <div class="logo">AgroFuturo</div>
 
-<nav>
-    <a href="#inicio">Início</a>
-    <a href="#producao">Produção</a>
-    <a href="#sustentabilidade">Sustentabilidade</a>
-    <a href="#desafios">Desafios</a>
-    <a href="#solucoes">Soluções</a>
-    <a href="#contato">Contato</a>
-</nav>
+        <button class="btn-menu" aria-label="Abrir menu">☰</button>
 
-<section class="banner" id="inicio">
-    <div class="banner-text">
-        <h2>Produzir Hoje, Preservar para o Amanhã</h2>
-        <p>Tecnologia, inovação e responsabilidade ambiental.</p>
-    </div>
-</section>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#producao">Produção</a>
+            <a href="#tecnologia">Tecnologia</a>
+            <a href="#desafios">Desafios</a>
+        </nav>
 
-<section id="producao">
-    <h2>🌾 Produção Agrícola</h2>
-    <p>
-        O agronegócio é um dos principais motores da economia brasileira,
-        gerando empregos, renda e abastecendo o mercado interno e externo.
-    </p>
+        <a href="#" class="btn-calculator">Calculadora de Impacto</a>
+    </header>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Agricultura de Precisão</h3>
-            <p>Uso de GPS, sensores e softwares para aumentar a produtividade.</p>
+    <main>
+        <section id="home" class="hero">
+            <h1>Agro forte, futuro sustentável</h1>
+            <p>Equilíbrio entre produção e meio ambiente</p>
+        </section>
+
+        <section id="producao" class="grid-container alternado">
+            <div>
+                <h2>Produção Agrícola</h2>
+                <p>Eficiência produtiva é o alicerce para manter a economia forte sem necessidade de expansão predatória.</p>
+            </div>
+            <div class="placeholder">[Placeholder Infográfico]</div>
+        </section>
+
+        <section id="tecnologia" class="section-default">
+            <h2>Tecnologias Sustentáveis</h2>
+            <div class="tech-grid">
+                <div class="card"><h3>Precisão</h3><p>Otimização via sensores.</p></div>
+                <div class="card"><h3>Irrigação</h3><p>Controle automatizado.</p></div>
+                <div class="card"><h3>Drones</h3><p>Monitoramento remoto.</p></div>
+                <div class="card"><h3>Energia</h3><p>Painéis solares.</p></div>
+            </div>
+        </section>
+
+        <section id="desafios" class="section-default">
+            <h2>Desafios</h2>
+            <p>Adotar práticas sustentáveis, reduzir desperdício e integrar tecnologia com responsabilidade social.</p>
+        </section>
+    </main>
+
+    <footer id="contato">
+        <div>
+            <h4>AgroFuturo</h4>
+            <p>Conectando tecnologia e campo.</p>
         </div>
-
-        <div class="card">
-            <h3>Irrigação Inteligente</h3>
-            <p>Controle eficiente da água para reduzir desperdícios.</p>
+        <div>
+            <h4>Contato</h4>
+            <p>contato@agrofuturo.com</p>
         </div>
-
-        <div class="card">
-            <h3>Drones Agrícolas</h3>
-            <p>Monitoramento de lavouras e identificação de pragas.</p>
+        <div>
+            <h4>Endereço</h4>
+            <p>Rua Exemplo, 123 — Cidade</p>
         </div>
-    </div>
-</section>
+    </footer>
 
-<section id="sustentabilidade">
-    <h2>♻️ Sustentabilidade</h2>
+    <div id="modal-calculator" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fechar modal">✕</button>
+            <h3>Calculadora de Impacto (exemplo)</h3>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Conservação do Solo</h3>
-            <p>Proteção contra erosão e manutenção da fertilidade.</p>
-        </div>
+            <form id="calc-form">
+                <label>
+                    Área (ha)
+                    <input type="number" id="area" min="0" step="0.01" required>
+                </label>
 
-        <div class="card">
-            <h3>Uso Consciente da Água</h3>
-            <p>Economia hídrica através de tecnologias modernas.</p>
-        </div>
+                <label>
+                    Emissão por ha (ton CO₂/ha)
+                    <input type="number" id="emissao" min="0" step="0.01" value="1.2" required>
+                </label>
 
-        <div class="card">
-            <h3>Energias Renováveis</h3>
-            <p>Energia solar e eólica reduzindo impactos ambientais.</p>
-        </div>
-    </div>
-</section>
+                <button type="submit" class="btn-submit">Calcular</button>
+            </form>
 
-<section id="desafios">
-    <h2>⚠️ Desafios Ambientais</h2>
-
-    <div class="cards">
-        <div class="card">
-            <h3>Desmatamento</h3>
-            <p>Perda de biodiversidade e alterações nos ecossistemas.</p>
-        </div>
-
-        <div class="card">
-            <h3>Uso Excessivo da Água</h3>
-            <p>Comprometimento de rios e reservatórios.</p>
-        </div>
-
-        <div class="card">
-            <h3>Emissão de Carbono</h3>
-            <p>Contribuição para o aquecimento global.</p>
+            <div id="calc-result" class="calc-result" aria-live="polite"></div>
         </div>
     </div>
-</section>
 
-<section id="solucoes">
-    <h2>🚜 Soluções e Futuro</h2>
-
-    <div class="cards">
-        <div class="card">
-            <h3>Agricultura Regenerativa</h3>
-            <p>Recuperação da qualidade do solo e da biodiversidade.</p>
-        </div>
-
-        <div class="card">
-            <h3>Inteligência Artificial</h3>
-            <p>Análise de dados para aumentar eficiência e sustentabilidade.</p>
-        </div>
-
-        <div class="card">
-            <h3>Monitoramento Ambiental</h3>
-            <p>Controle contínuo dos impactos ambientais.</p>
-        </div>
-    </div>
-</section>
-
-<section id="contato">
-    <h2>📩 Contato e Conscientização</h2>
-
-    <p>
-        O futuro da agricultura depende das escolhas sustentáveis feitas hoje.
-    </p>
-
-    <form>
-        <input type="text" placeholder="Seu nome" required>
-
-        <input type="email" placeholder="Seu e-mail" required>
-
-        <textarea rows="5" placeholder="Digite sua mensagem"></textarea>
-
-        <button type="submit">Enviar Mensagem</button>
-    </form>
-</section>
-
-<footer>
-    <p>© 2025 Agro Forte, Futuro Sustentável</p>
-    <p>Produção responsável para um planeta melhor 🌎</p>
-</footer>
-
+    <script src="script.js"></script>
 </body>
 </html>
-```
-
