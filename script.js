@@ -1,103 +1,58 @@
-// Modal da calculadora
-const btnCalc = document.querySelector('.btn-calculator');
-const modal = document.getElementById('modal-calculator');
-const modalClose = modal.querySelector('.modal-close');
-
-function openModal() {
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    // foco no primeiro input para acessibilidade
-    const firstInput = modal.querySelector('input');
-    if (firstInput) firstInput.focus();
-}
-function closeModal() {
-    modal.classList.add('hidden');
-    modal.setAttribute('aria-hidden', 'true');
-    btnCalc.focus();
-}
-
-btnCalc.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal();
-});
-
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal(); // fecha ao clicar fora do conteúdo
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
-});
-
-// Lógica da "Calculadora de Impacto"
-const form = document.getElementById('calc-form');
-const resultBox = document.getElementById('calc-result');
-
-function formatNumber(n){
-    return Number(n).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
-}
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const areaInput = document.getElementById('area');
-    const emissaoInput = document.getElementById('emissao');
-
-    const area = parseFloat(areaInput.value);
-    const emissao = parseFloat(emissaoInput.value);
-
-    // Validação básica além do required
-    if (isNaN(area) || area <= 0) {
-        resultBox.textContent = 'Insira uma área válida (> 0).';
-        areaInput.focus();
-        return;
-    }
-    if (isNaN(emissao) || emissao < 0) {
-        resultBox.textContent = 'Insira um valor de emissão válido (>= 0).';
-        emissaoInput.focus();
-        return;
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. INJEÇÃO DINÂMICA DO MODAL DA CALCULADORA (Garante que funcione em qualquer HTML)
+    if (!document.getElementById('modal-calculator')) {
+        const modalHTML = `
+            <div id="modal-calculator" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+                <div class="modal-content">
+                    <button class="modal-close" aria-label="Fechar modal">✕</button>
+                    <h3>Calculadora de Impacto Ambiental</h3>
+                    <p class="modal-subtitle">Estime a redução de CO₂ ao adotar práticas sustentáveis.</p>
+                    
+                    <form id="calc-form">
+                        <div class="form-group">
+                            <label for="calc-area">Área de Cultivo (Hectares)</label>
+                            <input type="number" id="calc-area" min="1" step="any" placeholder="Ex: 100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="calc-pratica">Prática Sustentável</label>
+                            <select id="calc-pratica" required>
+                                <option value="0.4">Plantio Direto (Evita ~0.4 ton de CO₂/ha)</option>
+                                <option value="0.6">Integração Lavoura-Pecuária-Floresta (Evita ~0.6 ton de CO₂/ha)</option>
+                                <option value="0.3">Uso de Bioinsumos (Evita ~0.3 ton de CO₂/ha)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">Calcular Impacto</button>
+                    </form>
+                    
+                    <div id="calc-result" class="calc-result hidden" aria-live="polite"></div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
     }
 
-    // Cálculo exemplo: emissão total = área · emissão por ha
-    const emissaoTotal = area * emissao; // toneladas CO₂
+    // 2. SELEÇÃO DE ELEMENTOS
+    const modal = document.getElementById('modal-calculator');
+    const modalClose = modal.querySelector('.modal-close');
+    const calcForm = document.getElementById('calc-form');
+    const calcResult = document.getElementById('calc-result');
+    const btnMenu = document.querySelector('.btn-menu');
+    const navMenu = document.getElementById('nav-menu');
 
-    // Estimativas adicionais (exemplos): custo estimado de mitigação, plantio de árvores
-    const custoPorTon = 10; // valor hipotético em moeda local por tonelada
-    const custoMitigacao = emissaoTotal * custoPorTon;
-
-    const arvoresPorTon = 0.05; // número hipotético de árvores necessárias por tonelada/ano
-    const arvoresNecessarias = emissaoTotal * arvoresPorTon;
-
-    resultBox.innerHTML = `Emissão total estimada: ${formatNumber(emissaoTotal)} ton CO₂<br>` +
-                          `Custo estimado de mitigação: R$ ${formatNumber(custoMitigacao)}<br>` +
-                          `Árvores necessárias/ano (estimativa): ${formatNumber(arvoresNecessarias)}`;
-});
-
-// Acessibilidade: manter foco trap dentro do modal quando aberto
-modal.addEventListener('keydown', (e) => {
-    if (e.key !== 'Tab' || modal.classList.contains('hidden')) return;
-    const focusable = modal.querySelectorAll('a, button, input, textarea, select');
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+    // 3. CONTROLE DO MODAL (ABRIR E FECHAR)
+    function openModal() {
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // Bloqueia o scroll do fundo
+        const firstInput = modal.querySelector('input');
+        if (firstInput) firstInput.focus();
     }
-});
 
-// Exemplo: botão de menu mobile simples (abre/fecha nav)
-const btnMenu = document.querySelector('.btn-menu');
-const nav = document.querySelector('nav');
-if (btnMenu){
-    btnMenu.addEventListener('click', () => {
-        const expanded = btnMenu.getAttribute('aria-expanded') === 'true';
-        btnMenu.setAttribute('aria-expanded', String(!expanded));
-        nav.style.display = expanded ? '' : 'flex';
-    });
-}
+    function closeModal() {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = ''; // Libera o scroll
+        calcForm.reset();
+        calcResult.classList.add
