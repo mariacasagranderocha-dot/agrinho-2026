@@ -3,73 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroFuturo — Sustentabilidade & Tecnologia Agrícola</title>
-    <!-- Fonte moderna e profissional -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>AgroFuturo - Sustentabilidade e Tecnologia</title>
+    <style>
+        /* Variáveis de Design */
+        :root {
+            --primary-green: #2d5a27;
+            --secondary-green: #4caf50;
+            --accent-yellow: #fbc02d;
+            --dark-gray: #333;
+            --light-bg: #f4f4f4;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        /* Cabeçalho */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: bold; font-size: 1.5rem; color: var(--primary-green); }
+        nav a { margin: 0 15px; text-decoration: none; color: var(--dark-gray); font-weight: 500; }
+        .btn-calculator { background: var(--accent-yellow); padding: 10px 20px; border-radius: 5px; text-decoration: none; color: var(--dark-gray); font-weight: bold; }
+
+        /* Hero Section */
+        #hero { height: 80vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('campo-tecnologia.jpg') center/cover; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+        #hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+
+        /* Seções Gerais */
+        section { padding: 4rem 10%; }
+        .grid-container { display: grid; gap: 2rem; align-items: center; }
+        .alternado { grid-template-columns: 1fr 1fr; }
+
+        /* Grid Tecnologias */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .card { background: var(--white); padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .card img { width: 50px; margin-bottom: 10px; }
+
+        /* Rodapé */
+        footer { background: var(--dark-gray); color: white; padding: 2rem 10%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .alternado { grid-template-columns: 1fr; }
+            nav { display: none; } /* Simulação de menu hidden para mobile */
+            footer { grid-template-columns: 1fr; text-align: center; }
+        }
+    </style>
 </head>
 <body>
 
-    <header id="main-header">
-        <div class="logo">
-            <span class="logo-icon">🌱</span> AgroFuturo
-        </div>
-        
-        <button class="btn-menu" aria-label="Abrir menu" aria-expanded="false">
-            <span class="hamburger"></span>
-        </button>
-
-        <nav id="nav-menu">
-            <a href="#home">Início</a>
+    <header>
+        <div class="logo">AgroFuturo</div>
+        <nav>
+            <a href="#home">Home</a>
             <a href="#producao">Produção</a>
             <a href="#tecnologia">Tecnologia</a>
             <a href="#desafios">Desafios</a>
         </nav>
-
-        <button class="btn-calculator">Calculadora de Impacto</button>
+        <a href="#" class="btn-calculator">Calculadora de Impacto</a>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <span class="badge">O Futuro da Agricultura</span>
-                <h1>Agro forte, futuro sustentável</h1>
-                <p>Unindo alta produtividade e preservação ambiental através de tecnologia de ponta.</p>
-                <div class="hero-actions">
-                    <a href="#tecnologia" class="btn-primary">Conhecer Tecnologias</a>
-                    <button class="btn-secondary btn-calculator">Calcular Impacto</button>
-                </div>
-            </div>
-        </section>
+    <section id="hero">
+        <h1>Agro forte, futuro sustentável</h1>
+        <p>Equilíbrio entre produção e meio ambiente</p>
+    </section>
 
-        <!-- Seção Produção -->
-        <section id="producao" class="grid-container alternado">
-            <div class="section-text">
-                <span class="section-tag">Eficiência</span>
-                <h2>Produção Agrícola Inteligente</h2>
-                <p>Aumentar a produtividade sem expandir a área cultivada é o maior desafio do século. Através de práticas regenerativas, conseguimos manter o solo fértil e a economia forte de forma sustentável.</p>
-                <ul class="features-list">
-                    <li>Rotação de culturas otimizada</li>
-                    <li>Recuperação de áreas degradadas</li>
-                    <li>Preservação de recursos hídricos</li>
-                </ul>
-            </div>
-            <div class="visual-card">
-                <div class="chart-placeholder">
-                    <div class="bar-chart">
-                        <div class="bar" style="--height: 40%"><span>2024</span></div>
-                        <div class="bar highlight" style="--height: 85%"><span>Futuro</span></div>
-                    </div>
-                    <p class="chart-label">Projeção de eficiência de produção (+112%)</p>
-                </div>
-            </div>
-        </section>
+    <section id="producao" class="grid-container alternado">
+        <div>
+            <h2>Produção Agrícola</h2>
+            <p>Eficiência produtiva é o alicerce para manter a economia forte sem necessidade de expansão predatória.</p>
+        </div>
+        <div style="background: #ccc; height: 300px;">[Placeholder Infográfico]</div>
+    </section>
 
-        <!-- Seção Tecnologia -->
-        <section id="tecnologia" class="section-default bg-light">
-            <div class="section-header">
-                <span class="section-tag">Inovação</span>
-                <h2>Tecnologias Sustentáveis</h2>
+    <section id="tecnologia">
+        <h2>Tecnologias Sustentáveis</h2>
+        <div class="tech-grid">
+            <div class="card"><h3>Precisão</h3><p>Otimização via sensores.</p></div>
+            <div class="card"><h3>Irrigação</h3><p>Controle automatizado.</p></div>
+            <div class="card"><h3>Drones</h3><p>Monitoramento remoto.</p></div>
+            <div class="card"><h3>Energia</h3><p>Painéis solares.</p></div>
+        </div>
+    </section>
+
+    <footer id="contato">
