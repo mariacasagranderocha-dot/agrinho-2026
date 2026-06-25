@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroFuturo - Sustentabilidade e Tecnologia</title>
-    <style>
-        /* Variáveis de Design */
-        :root {
-            --primary-green: #2d5a27;
-            --secondary-green: #4caf50;
-            --accent-yellow: #fbc02d;
-            --dark-gray: #333;
-            --light-bg: #f4f4f4;
-            --white: #ffffff;
-        }
-
+:root {
+    /* Tons de Verde Profissionais */
+    --primary-green: #1b4332;      /* Verde floresta escuro (para textos principais e cabeçalho) */
+    --secondary-green: #2d6a4f;    /* Verde folha médio (para botões e destaques) */
+    --light-green: #d8f3dc;        /* Verde menta bem claro (para fundos de seções e detalhes) */
+    --accent-green: #52b788;       /* Verde esmeralda vibrante (para ícones e hover) */
+    
+    /* Cores de Apoio */
+    --accent-yellow: #fbc02d;      /* Amarelo ouro (para o botão de destaque da calculadora) */
+    --dark-gray: #2d312e;          /* Cinza escuro quase verde para textos */
+    --light-bg: #f4f9f4;           /* Fundo verde-claro quase branco, muito suave */
+    --white: #ffffff;
+}
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         /* Cabeçalho */
