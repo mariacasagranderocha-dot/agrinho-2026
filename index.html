@@ -1,161 +1,172 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Agrinho 2026 — Futuro Sustentável</title>
-  <meta name="description" content="Calculadora Agrinho — compare práticas agrícolas e estime impactos." />
-  <link rel="icon" href="assets/favicon.ico" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrinho - Futuro Sustentável</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-grid">
-      <div class="brand" aria-hidden="false">
-        <img src="assets/icon-eco.png" alt="Logo Agrinho" class="brand-icon">
-        <div>
-          <h1>Agrinho 2026</h1>
-          <p class="tag">Futuro sustentável — energia, solo e comunidade</p>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">🌱 Agrinho</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#pilares">Pilares</a></li>
+                <li><a href="#dicas">Dicas</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Seção Hero -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Futuro <span class="highlight">Sustentável</span></h1>
+            <p class="hero-subtitle">Cultivando hoje o mundo que queremos amanhã 🌍</p>
+            <button class="btn-primary" onclick="scrollToSection('sobre')">Saiba Mais</button>
         </div>
-      </div>
-      <nav class="nav" aria-label="Navegação principal">
-        <a href="#calc">Calculadora</a>
-        <a href="#about">Sobre</a>
-        <a href="#contact">Contato</a>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="container hero-inner">
-      <div class="hero-text">
-        <h2>Estimativas práticas para decisões sustentáveis</h2>
-        <p class="muted">Calcule impacto, compare práticas e gere relatórios rápidos para comunidades e agricultores.</p>
-        <a href="#calc" class="btn primary">Começar</a>
-      </div>
-      <div class="hero-art">
-        <picture>
-          <source srcset="assets/hero.webp" type="image/webp">
-          <img src="assets/hero.jpg" alt="Fazenda sustentável com painéis solares e agricultores" loading="lazy">
-        </picture>
-      </div>
-    </div>
-  </section>
-
-  <main class="container main-grid" id="main" role="main">
-    <section id="calc" class="card calc-card" aria-labelledby="calc-title">
-      <div class="card-deco" aria-hidden="true" style="background-image:url('assets/pattern.png')"></div>
-      <h2 id="calc-title">Calculadora de Impacto</h2>
-      <p class="muted">Insira os dados para obter indicadores. Fórmulas podem ser ajustadas no código.</p>
-
-      <form id="calc-form" novalidate>
-        <div class="form-grid">
-          <label class="field">
-            <span>Área (ha)</span>
-            <input type="number" id="area" name="area" min="0" step="0.01" required placeholder="Ex: 1.5" />
-            <small class="hint">Hectares plantados</small>
-          </label>
-
-          <label class="field">
-            <span>Produção anual (t)</span>
-            <input type="number" id="prod" name="prod" min="0" step="0.01" required placeholder="Ex: 2.3" />
-            <small class="hint">Toneladas por ano</small>
-          </label>
-
-          <label class="field">
-            <span>Práticas</span>
-            <select id="practices" name="practices" required>
-              <option value="">Selecione...</option>
-              <option value="convencional">Convencional</option>
-              <option value="sustentavel">Sustentável</option>
-              <option value="organico">Orgânico</option>
-            </select>
-          </label>
-
-          <label class="field full">
-            <span>Observações (opcional)</span>
-            <input type="text" id="notes" name="notes" placeholder="Ex: rotação de culturas, plantio direto..." />
-          </label>
+        <div class="floating-elements">
+            <span class="leaf leaf-1">🍃</span>
+            <span class="leaf leaf-2">🌿</span>
+            <span class="leaf leaf-3">🌱</span>
+            <span class="leaf leaf-4">☀️</span>
         </div>
-
-        <div class="actions">
-          <div class="left">
-            <button type="submit" class="btn primary">Calcular</button>
-            <button type="button" id="reset-btn" class="btn ghost">Limpar</button>
-          </div>
-          <div class="right">
-            <button type="button" id="export-csv" class="btn">Exportar CSV</button>
-            <button type="button" id="copy-link" class="btn">Copiar link</button>
-          </div>
-        </div>
-      </form>
-
-      <div id="result" aria-live="polite" class="result hidden">
-        <h3>Resultados</h3>
-        <div class="result-grid">
-          <div class="result-card">
-            <img src="assets/icon-eco.png" alt="" aria-hidden="true">
-            <div>
-              <small>Impacto estimado</small>
-              <strong id="impact">—</strong>
-            </div>
-          </div>
-          <div class="result-card">
-            <img src="assets/icon-chart.png" alt="" aria-hidden="true">
-            <div>
-              <small>Produtividade (t/ha)</small>
-              <strong id="prod-per-ha">—</strong>
-            </div>
-          </div>
-          <div class="result-card">
-            <img src="assets/icon-data.png" alt="" aria-hidden="true">
-            <div>
-              <small>Fator de prática</small>
-              <strong id="factor">—</strong>
-            </div>
-          </div>
-        </div>
-
-        <div class="viz">
-          <canvas id="chart" width="600" height="240" aria-label="Gráfico de produtividade" role="img"></canvas>
-        </div>
-
-        <div class="result-actions">
-          <button id="download-txt" class="btn">Baixar resumo</button>
-          <button id="close-result" class="btn ghost">Fechar</button>
-        </div>
-      </div>
     </section>
 
-    <aside id="about" class="card about-card" aria-labelledby="about-title">
-      <h2 id="about-title">Por que usar</h2>
-      <p class="muted">Rápido, transparente e pensado para práticas sustentáveis. Tenha resultados e compartilhe com sua comunidade.</p>
+    <!-- Seção Sobre -->
+    <section id="sobre" class="section about">
+        <h2 class="section-title">O que é o Agrinho?</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>O <strong>Agrinho</strong> é um programa educativo que promove a integração entre escola, família e comunidade, levando informações sobre <strong>saúde, segurança pessoal, meio ambiente e agricultura sustentável</strong> para crianças e jovens.</p>
+                <p>Através de atividades práticas, buscamos formar cidadãos conscientes e comprometidos com um futuro mais verde e justo para todos.</p>
+            </div>
+            <div class="about-image">🌾</div>
+        </div>
+    </section>
 
-      <ul class="benefits">
-        <li><img src="assets/icon-eco.png" alt="" /> Redução de impacto</li>
-        <li><img src="assets/icon-chart.png" alt="" /> Indicadores claros</li>
-        <li><img src="assets/icon-data.png" alt="" /> Compartilhamento fácil</li>
-      </ul>
+    <!-- Seção Pilares -->
+    <section id="pilares" class="section pilares">
+        <h2 class="section-title">Os 3 Pilares da Sustentabilidade</h2>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">🌳</div>
+                <h3>Ambiental</h3>
+                <p>Preservar os recursos naturais, proteger a biodiversidade e reduzir a poluição para garantir um planeta saudável.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">👥</div>
+                <h3>Social</h3>
+                <p>Promover justiça, igualdade e qualidade de vida para todas as pessoas, respeitando as diferenças.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💼</div>
+                <h3>Econômico</h3>
+                <p>Desenvolver uma economia justa que atenda às necessidades atuais sem comprometer as futuras gerações.</p>
+            </div>
+        </div>
+    </section>
 
-      <div id="contact" class="contact">
-        <h3>Contato</h3>
-        <p>Maria Casa Grande Rocha — <a href="https://github.com/mariacasagranderocha-dot" target="_blank" rel="noopener">GitHub</a></p>
-      </div>
-    </aside>
-  </main>
+    <!-- Seção Dicas -->
+    <section id="dicas" class="section dicas">
+        <h2 class="section-title">Dicas para um Futuro Verde</h2>
+        <div class="tips-grid">
+            <div class="tip-item">
+                <span class="tip-icon">💧</span>
+                <h4>Economize Água</h4>
+                <p>Feche a torneira ao escovar os dentes e tome banhos mais rápidos.</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">♻️</span>
+                <h4>Recicle</h4>
+                <p>Separe o lixo corretamente e dê destino adequado aos materiais.</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">🌱</span>
+                <h4>Plante uma Árvore</h4>
+                <p>Contribua para o ar puro e para a biodiversidade do planeta.</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">💡</span>
+                <h4>Economize Energia</h4>
+                <p>Apague as luzes ao sair e aproveite a luz natural do sol.</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">🚲</span>
+                <h4>Mobilidade Verde</h4>
+                <p>Prefira bicicletas ou caminhadas para trajetos curtos.</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">🥕</span>
+                <h4>Alimentação Saudável</h4>
+                <p>Consuma alimentos orgânicos e da agricultura familiar.</p>
+            </div>
+        </div>
+    </section>
 
-  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <!-- Seção Contador -->
+    <section class="section counter-section">
+        <h2 class="section-title">Nosso Impacto</h2>
+        <div class="counter-container">
+            <div class="counter-item">
+                <h3 class="counter" data-target="1500">0</h3>
+                <p>Árvores Plantadas 🌳</p>
+            </div>
+            <div class="counter-item">
+                <h3 class="counter" data-target="25000">0</h3>
+                <p>Alunos Participantes 👦👧</p>
+            </div>
+            <div class="counter-item">
+                <h3 class="counter" data-target="300">0</h3>
+                <p>Escolas Parceiras 🏫</p>
+            </div>
+            <div class="counter-item">
+                <h3 class="counter" data-target="50">0</h3>
+                <p>Comunidades Atendidas 🏘️</p>
+            </div>
+        </div>
+    </section>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>© Agrinho 2026 — Projeto exemplo. Ajuste fórmulas conforme metodologia.</p>
-    </div>
-  </footer>
+    <!-- Seção Quiz -->
+    <section id="quiz" class="section quiz-section">
+        <h2 class="section-title">Teste seus Conhecimentos!</h2>
+        <div class="quiz-container">
+            <div id="quiz-content">
+                <h3 id="question">Carregando...</h3>
+                <div id="options" class="options"></div>
+                <button id="next-btn" class="btn-primary" style="display:none;">Próxima Pergunta</button>
+            </div>
+            <div id="quiz-result" style="display:none;">
+                <h3>🎉 Parabéns!</h3>
+                <p>Você acertou <span id="score">0</span> de <span id="total">0</span> perguntas!</p>
+                <button class="btn-primary" onclick="restartQuiz()">Jogar Novamente</button>
+            </div>
+        </div>
+    </section>
 
-  <script src="script.js" type="module"></script>
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>🌱 Agrinho</h4>
+                <p>Construindo um futuro sustentável juntos.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>📧 contato@agrinho.org.br</p>
+                <p>📞 (41) 1234-5678</p>
+            </div>
+            <div class="footer-section">
+                <h4>Redes Sociais</h4>
+                <p>📘 Facebook | 📷 Instagram</p>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2026 Agrinho - Futuro Sustentável. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
