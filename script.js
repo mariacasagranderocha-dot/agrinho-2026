@@ -1,58 +1,82 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. INJEÇÃO DINÂMICA DO MODAL DA CALCULADORA (Garante que funcione em qualquer HTML)
-    if (!document.getElementById('modal-calculator')) {
-        const modalHTML = `
-            <div id="modal-calculator" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
-                <div class="modal-content">
-                    <button class="modal-close" aria-label="Fechar modal">✕</button>
-                    <h3>Calculadora de Impacto Ambiental</h3>
-                    <p class="modal-subtitle">Estime a redução de CO₂ ao adotar práticas sustentáveis.</p>
-                    
-                    <form id="calc-form">
-                        <div class="form-group">
-                            <label for="calc-area">Área de Cultivo (Hectares)</label>
-                            <input type="number" id="calc-area" min="1" step="any" placeholder="Ex: 100" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="calc-pratica">Prática Sustentável</label>
-                            <select id="calc-pratica" required>
-                                <option value="0.4">Plantio Direto (Evita ~0.4 ton de CO₂/ha)</option>
-                                <option value="0.6">Integração Lavoura-Pecuária-Floresta (Evita ~0.6 ton de CO₂/ha)</option>
-                                <option value="0.3">Uso de Bioinsumos (Evita ~0.3 ton de CO₂/ha)</option>
-                            </select>
-                        </div>
-                        
-                        <button type="submit" class="btn-submit">Calcular Impacto</button>
-                    </form>
-                    
-                    <div id="calc-result" class="calc-result hidden" aria-live="polite"></div>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-    }
+// Calculadora Agrinho — script.js (vanilla JS)
+const form = document.getElementById('calc-form');
+const resultBox = document.getElementById('result');
+const impactEl = document.getElementById('impact');
+const prodPerHaEl = document.getElementById('prod-per-ha');
+const exportCsvBtn = document.getElementById('export-csv');
+const resetBtn = document.getElementById('reset-btn');
+const copyLinkBtn = document.getElementById('copy-link');
 
-    // 2. SELEÇÃO DE ELEMENTOS
-    const modal = document.getElementById('modal-calculator');
-    const modalClose = modal.querySelector('.modal-close');
-    const calcForm = document.getElementById('calc-form');
-    const calcResult = document.getElementById('calc-result');
-    const btnMenu = document.querySelector('.btn-menu');
-    const navMenu = document.getElementById('nav-menu');
+function sanitizeNumber(v){
+  const n = Number(String(v).replace(',', '.'));
+  return Number.isFinite(n) ? n : 0;
+}
 
-    // 3. CONTROLE DO MODAL (ABRIR E FECHAR)
-    function openModal() {
-        modal.classList.remove('hidden');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden'; // Bloqueia o scroll do fundo
-        const firstInput = modal.querySelector('input');
-        if (firstInput) firstInput.focus();
-    }
+function calcularImpacto({ area, prod, practices }){
+  const prodPerHa = area > 0 ? prod / area : 0;
 
-    function closeModal() {
-        modal.classList.add('hidden');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = ''; // Libera o scroll
-        calcForm.reset();
-        calcResult.classList.add
+  const factors = {
+    convencional: 1.0,
+    sustentavel: 0.8,
+    organico: 0.6
+  };
+  const factor = factors[practices] ?? 1.0;
+
+  const penalty = Math.log10(Math.max(area, 1)) * 0.05;
+  const impacto = Math.max(0, prod * factor * (1 - penalty));
+
+  return {
+    impacto: Number(impacto.toFixed(3)),
+    prodPerHa: Number(prodPerHa.toFixed(3)),
+    factor,
+    penalty: Number(penalty.toFixed(4))
+  };
+}
+
+function showResults(data){
+  impactEl.textContent = `${data.impacto} (unidades)`;
+  prodPerHaEl.textContent = `${data.prodPerHa} t/ha`;
+  resultBox.classList.remove('hidden');
+}
+
+form.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const area = sanitizeNumber(form.area.value);
+  const prod = sanitizeNumber(form.prod.value);
+  const practices = form.practices.value;
+
+  if(area <= 0 || prod <= 0 || !practices){
+    alert('Preencha todos os campos com valores válidos.');
+    return;
+  }
+
+  const resultado = calcularImpacto({ area, prod, practices });
+  showResults(resultado);
+
+  const params = new URLSearchParams({ area, prod, practices });
+  history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+});
+
+// Reset
+resetBtn.addEventListener('click', ()=>{
+  form.reset();
+  resultBox.classList.add('hidden');
+  history.replaceState(null, '', location.pathname);
+});
+
+// Export CSV
+exportCsvBtn.addEventListener('click', ()=>{
+  const area = sanitizeNumber(form.area.value);
+  const prod = sanitizeNumber(form.prod.value);
+  const practices = form.practices.value || '';
+  const resultado = calcularImpacto({ area, prod, practices });
+  const csv = [
+    ['campo','valor'],
+    ['area_ha', area],
+    ['producao_t', prod],
+    ['pratica', practices],
+    ['impacto', resultado.impacto],
+    ['prod_t_por_ha', resultado.prodPerHa]
+  ].map(r => r.join(',')).join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8
