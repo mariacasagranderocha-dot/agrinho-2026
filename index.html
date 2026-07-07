@@ -4,21 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Agrinho 2026 — Futuro Sustentável</title>
-  <meta name="description" content="Calculadora interativa Agrinho — estimativas de impacto para práticas agrícolas sustentáveis." />
+  <meta name="description" content="Calculadora Agrinho — compare práticas agrícolas e estime impactos." />
   <link rel="icon" href="assets/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-grid">
-      <div class="brand">
-        <img src="assets/icon-eco.png" alt="" class="brand-icon" aria-hidden="true">
+      <div class="brand" aria-hidden="false">
+        <img src="assets/icon-eco.png" alt="Logo Agrinho" class="brand-icon">
         <div>
           <h1>Agrinho 2026</h1>
           <p class="tag">Futuro sustentável — energia, solo e comunidade</p>
         </div>
       </div>
-      <nav class="nav">
+      <nav class="nav" aria-label="Navegação principal">
         <a href="#calc">Calculadora</a>
         <a href="#about">Sobre</a>
         <a href="#contact">Contato</a>
@@ -30,11 +34,14 @@
     <div class="container hero-inner">
       <div class="hero-text">
         <h2>Estimativas práticas para decisões sustentáveis</h2>
-        <p>Calcule impacto, compare práticas e compartilhe resultados para apoiar agricultores e iniciativas locais.</p>
+        <p class="muted">Calcule impacto, compare práticas e gere relatórios rápidos para comunidades e agricultores.</p>
         <a href="#calc" class="btn primary">Começar</a>
       </div>
       <div class="hero-art">
-        <img src="assets/hero.jpg" alt="Fazenda sustentável com painéis solares e agricultores" />
+        <picture>
+          <source srcset="assets/hero.webp" type="image/webp">
+          <img src="assets/hero.jpg" alt="Fazenda sustentável com painéis solares e agricultores" loading="lazy">
+        </picture>
       </div>
     </div>
   </section>
@@ -42,22 +49,24 @@
   <main class="container main-grid" id="main" role="main">
     <section id="calc" class="card calc-card" aria-labelledby="calc-title">
       <div class="card-deco" aria-hidden="true" style="background-image:url('assets/pattern.png')"></div>
-      <h2 id="calc-title">Calculadora de Impacto Agrinho</h2>
-      <p class="muted">Preencha os dados abaixo e veja indicadores sugeridos. Fórmulas podem ser ajustadas nas funções JS.</p>
+      <h2 id="calc-title">Calculadora de Impacto</h2>
+      <p class="muted">Insira os dados para obter indicadores. Fórmulas podem ser ajustadas no código.</p>
 
       <form id="calc-form" novalidate>
         <div class="form-grid">
-          <label>
+          <label class="field">
             <span>Área (ha)</span>
-            <input type="number" id="area" name="area" min="0" step="0.01" required placeholder="Ex: 1.5"/>
+            <input type="number" id="area" name="area" min="0" step="0.01" required placeholder="Ex: 1.5" />
+            <small class="hint">Hectares plantados</small>
           </label>
 
-          <label>
+          <label class="field">
             <span>Produção anual (t)</span>
-            <input type="number" id="prod" name="prod" min="0" step="0.01" required placeholder="Ex: 2.3"/>
+            <input type="number" id="prod" name="prod" min="0" step="0.01" required placeholder="Ex: 2.3" />
+            <small class="hint">Toneladas por ano</small>
           </label>
 
-          <label>
+          <label class="field">
             <span>Práticas</span>
             <select id="practices" name="practices" required>
               <option value="">Selecione...</option>
@@ -67,42 +76,43 @@
             </select>
           </label>
 
-          <label class="full-width">
+          <label class="field full">
             <span>Observações (opcional)</span>
-            <input type="text" id="notes" name="notes" placeholder="Ex: manejo conservacionista, rotação de culturas..." />
+            <input type="text" id="notes" name="notes" placeholder="Ex: rotação de culturas, plantio direto..." />
           </label>
         </div>
 
         <div class="actions">
-          <button type="submit" class="btn primary">Calcular</button>
-          <button type="button" id="reset-btn" class="btn">Limpar</button>
-          <div class="spacer"></div>
-          <div class="quick-icons" aria-hidden="true">
-            <img src="assets/icon-chart.png" alt="" />
-            <img src="assets/icon-data.png" alt="" />
+          <div class="left">
+            <button type="submit" class="btn primary">Calcular</button>
+            <button type="button" id="reset-btn" class="btn ghost">Limpar</button>
+          </div>
+          <div class="right">
+            <button type="button" id="export-csv" class="btn">Exportar CSV</button>
+            <button type="button" id="copy-link" class="btn">Copiar link</button>
           </div>
         </div>
       </form>
 
       <div id="result" aria-live="polite" class="result hidden">
         <h3>Resultados</h3>
-        <div class="result-cards">
-          <div class="result-item">
-            <img src="assets/icon-eco.png" alt="" />
+        <div class="result-grid">
+          <div class="result-card">
+            <img src="assets/icon-eco.png" alt="" aria-hidden="true">
             <div>
               <small>Impacto estimado</small>
               <strong id="impact">—</strong>
             </div>
           </div>
-          <div class="result-item">
-            <img src="assets/icon-chart.png" alt="" />
+          <div class="result-card">
+            <img src="assets/icon-chart.png" alt="" aria-hidden="true">
             <div>
               <small>Produtividade (t/ha)</small>
               <strong id="prod-per-ha">—</strong>
             </div>
           </div>
-          <div class="result-item">
-            <img src="assets/icon-data.png" alt="" />
+          <div class="result-card">
+            <img src="assets/icon-data.png" alt="" aria-hidden="true">
             <div>
               <small>Fator de prática</small>
               <strong id="factor">—</strong>
@@ -110,22 +120,25 @@
           </div>
         </div>
 
+        <div class="viz">
+          <canvas id="chart" width="600" height="240" aria-label="Gráfico de produtividade" role="img"></canvas>
+        </div>
+
         <div class="result-actions">
-          <button id="export-csv" class="btn">Exportar CSV</button>
-          <button id="copy-link" class="btn">Copiar link</button>
-          <a id="download-pdf" class="btn" href="#" download="resultado-agrinho.txt">Baixar resumo</a>
+          <button id="download-txt" class="btn">Baixar resumo</button>
+          <button id="close-result" class="btn ghost">Fechar</button>
         </div>
       </div>
     </section>
 
     <aside id="about" class="card about-card" aria-labelledby="about-title">
       <h2 id="about-title">Por que usar</h2>
-      <p>Rápido, seguro e transparente — a calculadora ajuda organizações e agricultores a comparar cenários e priorizar práticas sustentáveis.</p>
+      <p class="muted">Rápido, transparente e pensado para práticas sustentáveis. Tenha resultados e compartilhe com sua comunidade.</p>
 
       <ul class="benefits">
         <li><img src="assets/icon-eco.png" alt="" /> Redução de impacto</li>
         <li><img src="assets/icon-chart.png" alt="" /> Indicadores claros</li>
-        <li><img src="assets/icon-data.png" alt="" /> Compartilhamento de resultados</li>
+        <li><img src="assets/icon-data.png" alt="" /> Compartilhamento fácil</li>
       </ul>
 
       <div id="contact" class="contact">
@@ -135,9 +148,11 @@
     </aside>
   </main>
 
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
   <footer class="site-footer">
     <div class="container">
-      <p>© Agrinho 2026 — Projeto exemplo. Dados e fórmulas readequáveis.</p>
+      <p>© Agrinho 2026 — Projeto exemplo. Ajuste fórmulas conforme metodologia.</p>
     </div>
   </footer>
 
